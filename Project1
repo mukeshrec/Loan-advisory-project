@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💸 Loan vs Invest Advisor</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:600,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #f9fafc;
+      --font-light: #23272f;
+      --card-light: #fff;
+      --bg-dark: #191c24;
+      --font-dark: #f8f8fa;
+      --card-dark: #232534;
+      --primary: #36adf6;
+      --accent: #49d79b;
+      --danger: #f4645f;
+      --gradient: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--bg-light);
+      color: var(--font-light);
+      transition: background 0.5s, color 0.5s;
+    }
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--font-dark);
+    }
+    .main-header {
+      background: var(--gradient);
+      color: white;
+      padding: 1.8rem 1rem 1.2rem;
+      box-shadow: 0 3px 16px 0 rgba(35,80,133, .07);
+      border-radius: 0 0 36px 36px;
+      text-align: center;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .main-header h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: .2em;
+      letter-spacing: -1px;
+    }
+    .main-header span {
+      font-size: 1.1rem;
+      opacity: .92;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .toggle-theme {
+      position: fixed;
+      top: 22px;
+      right: 22px;
+      background: rgba(255,255,255,0.32);
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 6px 15px;
+      border-radius: 50px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 2;
+      transition: background 0.4s, color 0.4s, border 0.4s;
+    }
+    .toggle-theme:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--accent);
+    }
+    .container {
+      max-width: 550px;
+      margin: auto;
+      background: var(--card-light);
+      box-shadow: 0 6px 24px rgba(40,60,110,0.08);
+      padding: 32px 26px 20px 26px;
+      border-radius: 18px;
+      transition: background 0.5s;
+    }
+    body.dark .container {
+      background: var(--card-dark);
+      box-shadow: 0 7px 32px 0 rgba(30, 40, 70, 0.18);
+    }
+    .icon-box {
+      background: var(--accent);
+      color: #fff;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      font-size: 2rem;
+      margin: 0 auto 12px auto;
+      box-shadow: 0 3px 14px -5px #49d79b99;
+    }
+    label {
+      margin-top: 18px;
+      display: block;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 7px;
+      margin-bottom: 5px;
+      border-radius: 7px;
+      border: 1.2px solid #c0dae0;
+      font-size: 15.2px;
+      background: #f6fbfd;
+      color: var(--font-light);
+      transition: border 0.3s, background 0.3s;
+      box-shadow: 0 1.5px 8px -5px #2193b040;
+      outline: none;
+    }
+    input:focus {
+      border-color: var(--primary);
+      background: #e8f5fa;
+    }
+    body.dark input {
+      background: #232631;
+      color: var(--font-dark);
+      border-color: #5787be;
+    }
+    body.dark input:focus {
+      background: #232b3a;
+      border-color: var(--accent);
+    }
+    button[type="submit"] {
+      background: var(--primary);
+      color: white;
+      padding: 13px;
+      font-size: 1.13rem;
+      width: 100%;
+      margin-top: 27px;
+      border: none;
+      border-radius: 7px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 16px -6px #2193b099;
+      transition: background 0.25s, box-shadow 0.3s, transform 0.2s;
+    }
+    button[type="submit"]:hover {
+      background: var(--accent);
+      box-shadow: 0 6px 18px -7px #49d79b80;
+      transform: scale(1.02);
+    }
+    .result {
+      margin-top: 34px;
+      background: #f7fdf7;
+      border-left: 5px solid var(--accent);
+      border-radius: 9px;
+      padding: 25px 24px 18px 24px;
+      box-shadow: 0 3px 18px -8px #49d79b26;
+      display: none;
+      animation: fadeIn .88s;
+    }
+    .result h3 {
+      margin-top: 0;
+      font-size: 22px;
+      color: var(--accent);
+    }
+    .result .emoji {
+      font-size: 2.4rem;
+      vertical-align: middle;
+    }
+    @keyframes fadeIn {
+      0% {opacity: 0; transform: translateY(28px);}
+      70%{opacity: 1;}
+      100% {opacity: 1; transform: translateY(0);}
+    }
+    body.dark .result {
+      background: #2b392b;
+      color: #d2f3db;
+    }
+    .tips {
+      margin-top: 36px;
+      padding: 16px 13px 7px 17px;
+      background: #f1f9fd;
+      border-radius: 8px;
+      color: #257199;
+      font-size: 14.7px;
+      box-shadow: 0 2px 7px -5px #36adf666;
+      line-height: 1.65;
+    }
+    body.dark .tips {
+      background: #213549;
+      color: #b7e4fa;
+    }
+    footer {
+      text-align: center;
+      margin-top: 42px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      opacity: 0.68;
+      color: #787e89;
+      letter-spacing: 0.02em;
+    }
+    body.dark footer {
+      color: #8ba0bc;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 16px 7vw 12px 7vw;}
+      .main-header h1 { font-size: 1.34rem; }
+      .main-header { padding: 1.2rem 0.7rem 1.2rem; }
+    }
+  </style>
+</head>
+<body class="light">
+  <button class="toggle-theme" onclick="toggleTheme()">🌗 Toggle Mode</button>
+  <header class="main-header">
+    <span>💰 Smart Finance Tool</span>
+    <h1>Loan vs Invest Advisor</h1>
+  </header>
+
+  <div class="container">
+    <div class="icon-box" title="Advisor">🤖</div>
+    <form id="advisorForm" autocomplete="off">
+      <label for="loanAmount">Loan Amount (₹):</label>
+      <input type="number" id="loanAmount" placeholder="e.g., 1000000" required />
+
+      <label for="interestRate">Loan Interest Rate (%):</label>
+      <input type="number" id="interestRate" step="0.01" placeholder="e.g., 7.5" required />
+
+      <label for="expectedReturn">Expected Investment Return (%):</label>
+      <input type="number" id="expectedReturn" step="0.01" placeholder="e.g., 12" required />
+
+      <label for="extraAmount">Extra Monthly Amount (₹):</label>
+      <input type="number" id="extraAmount" placeholder="e.g., 5000" required />
+
+      <button type="submit">Analyze &rarr;</button>
+    </form>
+
+    <div class="result" id="resultBox">
+      <h3><span class="emoji">📊</span> Your Strategy</h3>
+      <p id="recommendationText"></p>
+      <p id="interestSavedText"></p>
+    </div>
+
+    <div class="tips">
+      <strong>💡 Pro Tips:</strong>
+      <ul style="margin:8px 0 3px 16px;padding-left:0;">
+        <li>Use <b>dark mode</b> at night for a softer view.</li>
+        <li>Compare returns before investing surplus in the market.</li>
+        <li>Revisit strategy every 6-12 months as rates and offers change.</li>
+      </ul>
+    </div>
+    <footer>© 2025 | SmartLoanAdvisor.ai</footer>
+  </div>
+  <script>
+    document.getElementById('advisorForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+      const interestRate = parseFloat(document.getElementById('interestRate').value) / 100;
+      const expectedReturn = parseFloat(document.getElementById('expectedReturn').value) / 100;
+      const extraAmount = parseFloat(document.getElementById('extraAmount').value);
+      let recommendation = '';
+      if (interestRate > expectedReturn) {
+        recommendation = "💡 You should use your extra money to <b>Prepay the Loan</b> for better savings.";
+      } else {
+        recommendation = "💹 You should consider <b>Investing</b> the extra amount for higher returns.";
+      }
+      const baseInterest = loanAmount * interestRate * 20;
+      const reducedInterest = loanAmount * interestRate * 18;
+      const interestSaved = baseInterest - reducedInterest;
+      document.getElementById('recommendationText').innerHTML = recommendation;
+      document.getElementById('interestSavedText').innerHTML =
+        "🎯 <b>Estimated Interest Saved:</b> ₹" + interestSaved.toFixed(2);
+      document.getElementById('resultBox').style.display = 'block';
+    });
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle('dark');
+      body.classList.toggle('light');
+    }
+  </script>
+</body>
+</html>
